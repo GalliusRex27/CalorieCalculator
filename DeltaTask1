@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calorie Calculator</title>
+<marquee style="color:Red;font-family='Arial'">Lets Calc Calories</marquee>
+<br>
+</head>
+<script>
+var a=[]; var b=[]; var c=[]; var d=[];
+function SetLimit(){
+if(sessionStorage.getItem("limit")){
+alert("Limit already exists as "+sessionStorage.getItem("limit"));
+return;}
+var q=parseInt(prompt("Enter you age"));
+var w=parseInt(prompt("Enter you height in cms"));
+var e=parseInt(prompt("Enter you weight in kgs"));
+var r=prompt("Enter you gender, either M or F");
+if(r=='M'||r=='m'){
+var limit1=10*e+6.25*w-5*q+5;
+var limit2=3;
+var limit3=20;
+alert("The set calorie limit is "+limit1);}
+else if(r=='F'||r=='f'){
+var limit1=10*e+6.25*w-5*q-161;
+var limit2=2.25;
+var limit3=18;
+alert("The set calorie/day limit is "+limit1);}
+if(q<6){
+var limit2=0.7;
+var limit3=16;}
+else if(q<13){
+var limit2=1.5;
+var limit3=14;}
+alert("The set litres of water/day limit is "+limit2);
+alert("The set milligram of iron/day limit is "+limit3);
+if(r!='m'&&r!='M'&&r!='f'&&r!='F'){
+alert("Yea.. IDK Bro");}
+sessionStorage.setItem("limit1",parseInt(limit1));
+sessionStorage.setItem("limit2",parseInt(limit2));
+sessionStorage.setItem("limit3",parseInt(limit3));
+console.log(sessionStorage.getItem("limit1"));
+console.log(sessionStorage.getItem("limit2"));
+console.log(sessionStorage.getItem("limit3"));}
+function save(){
+var x=document.getElementById("FoodName").value;
+a.push(x);
+document.getElementById("FoodName").value="";}
+function save1(){
+var x=document.getElementById("Calories").value;
+b.push(x);
+document.getElementById("Calories").value="";}
+function save2(){
+var x=document.getElementById("Water").value;
+c.push(x);
+document.getElementById("Water").value="";}
+function save3(){
+var x=document.getElementById("Iron").value;
+d.push(x);
+document.getElementById("Iron").value="";}
+function add(){
+sessionStorage.setItem("fname", JSON.stringify(a));
+sessionStorage.setItem("fcal", JSON.stringify(b));
+sessionStorage.setItem("fwat", JSON.stringify(c));
+sessionStorage.setItem("firon", JSON.stringify(d));
+var x=JSON.parse(sessionStorage.getItem("fcal"));
+var y=JSON.parse(sessionStorage.getItem("fwat"));
+var z=JSON.parse(sessionStorage.getItem("firon"));
+var sum1=0,sum2=0,sum3=0;
+for(var i=0;i<x.length;i++){
+sum1+=parseInt(x[i]);
+sum2+=parseInt(y[i]);
+sum3+=parseInt(z[i]);}
+if(sum1<sessionStorage.getItem("limit1")){
+alert("You are short by "+(sessionStorage.getItem("limit1")-sum1)+" calorie(s)");}
+if(sum1>sessionStorage.getItem("limit1")){
+alert("You are over by "+(-1*sessionStorage.getItem("limit1")+sum1)+" calories(s)");}
+if(sum1==sessionStorage.getItem("limit1")){
+alert("You are on the dot for calories");}
+if(sum2<sessionStorage.getItem("limit2")){
+alert("You are short by "+(sessionStorage.getItem("limit2")-sum2)+"L of water/day");}
+if(sum2>sessionStorage.getItem("limit2")){
+alert("You are over by "+(-1*sessionStorage.getItem("limit2")+sum2)+"L of water/day");}
+if(sum2==sessionStorage.getItem("limit2")){
+alert("You are on the dot for water");}
+if(sum3<sessionStorage.getItem("limit3")){
+alert("You are short by "+(sessionStorage.getItem("limit3")-sum3)+"mg of iron/day");}
+if(sum3>sessionStorage.getItem("limit3")){
+alert("You are over by "+(-1*sessionStorage.getItem("limit3")+sum3+" mg of iron/day"));}
+if(sum3==sessionStorage.getItem("limit3")){
+alert("You are on the dot for iron");}}
+</script>
+<body>
+<p>So this is how it works,see? You set a calorie limit, see? And then calories you ate,see? And we'll tell you if you're eating right. Capiche?</p>
+<input type="button" value="Set Limit" onclick="SetLimit()" /></input><br>
+<input type="text" id="FoodName">Name of Edible Item</input><br>
+<input type="text" id="Calories">Calories</input><br>
+<input type="text" id="Water">Water(L)</input><br>
+<input type="text" id="Iron">Iron(mg)</input><br>
+<input type="button" value="Save" onclick="save();save1();save2();save3()" /></input><br>
+<input type="button" value="Submit" onclick="add()" /></input><br>
+</body>
+</html>
